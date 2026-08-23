@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+:root {
+  --background: #faf7f1;
+  --foreground: #15120d;
+
+  /* Brand palette — warm ink + paper, the "editorial studio" combination
+     (award-winning creative-studio sites) instead of a flat corporate
+     navy/white: ink carries text, dark sections and primary actions on
+     light surfaces; paper carries light section tints and (as a light
+     fill) buttons placed directly on ink; a warm brass/amber accent is
+     used sparingly for eyebrow labels, underlines and small highlights —
+     it echoes a drafting pencil/blueprint stamp, which fits a technical-
+     drawing business better than a generic gold. Defined as plain custom
+     properties (not inside @theme) so they're real, usable CSS variables —
+     e.g. inline SVG can reference var(--brand-navy) directly, not just the
+     bg-brand-navy/text-brand-navy Tailwind utilities below. Variable names
+     kept as brand-navy/beige/gold (legacy) so every existing className
+     across the codebase keeps working — only the values and their role
+     nuance changed. */
+  --brand-navy: #15120d;
+  --brand-navy-dark: #0a0806;
+  --brand-navy-light: #241e15;
+  --brand-beige: #faf7f1;
+  --brand-beige-dark: #f1ead9;
+  --brand-gold: #b8952e;
+  --brand-gold-dark: #836a1f;
+  --brand-ink-muted: #6b6459;
+  --brand-line: rgba(14, 16, 19, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-heading-condensed);
+
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-navy-dark: var(--brand-navy-dark);
+  --color-brand-navy-light: var(--brand-navy-light);
+  --color-brand-beige: var(--brand-beige);
+  --color-brand-beige-dark: var(--brand-beige-dark);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-gold-dark: var(--brand-gold-dark);
+  --color-brand-ink-muted: var(--brand-ink-muted);
+  --color-brand-line: var(--brand-line);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Offsets anchor-scrolled sections so they land below the sticky header. */
+section[id] {
+  scroll-margin-top: 88px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+::selection {
+  background: var(--brand-navy);
+  color: var(--brand-beige);
+}
+
+/* Slow, subtle zoom on hero/page-header photos — the "documentary" motion
+   premium architecture/portfolio sites use instead of a static background. */
+@keyframes ken-burns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+.animate-ken-burns {
+  animation: ken-burns 20s ease-out forwards;
+}
+
+/* Small uptick used on eyebrow labels ("01 — Diensten") so they don't just
+   snap into place with the rest of the Reveal block — a one-off editorial
+   flourish, not a general-purpose utility. */
+@keyframes eyebrow-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-eyebrow {
+  animation: eyebrow-in 0.5s ease-out both;
+}
+
+/* Cross-fade between testimonial slides in the reviews carousel. */
+@keyframes testimonial-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-testimonial-fade {
+  animation: testimonial-fade-in 0.5s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-ken-burns,
+  .animate-eyebrow,
+  .animate-ping,
+  .animate-testimonial-fade {
+    animation: none;
+  }
+}
