@@ -16,11 +16,8 @@ export function whatsAppLink(phone: string) {
 // of a phone call — provided directly by the client.
 export const CALENDLY_URL = "https://calendly.com/3dcreates-info/30-min-gratis-kennismakingsgesprek";
 
-// Left empty until this site gets its own GA4 property (deferred as a
-// separate follow-up step across all sites) — CookieConsent.tsx skips
-// rendering both the tracker and the consent banner entirely while empty,
-// rather than showing a consent prompt for a tracker that isn't wired up.
-export const GA_MEASUREMENT_ID = "";
+// This site's own GA4 measurement ID.
+export const GA_MEASUREMENT_ID = "G-QF7BMCTC68";
 
 // Where new contact-form leads are emailed — the lead itself is always
 // saved to Supabase regardless of whether this email send succeeds.
