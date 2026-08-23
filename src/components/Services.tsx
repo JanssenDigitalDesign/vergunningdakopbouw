@@ -36,7 +36,7 @@ export function Services({ content }: { content: LandingPageContent }) {
       <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
         <SectionHeading
           eyebrow="Diensten"
-          title="Waar wij u bij helpen"
+          title="Diensten voor uw dakopbouwvergunning"
           description="Van eerste schets tot een tekening die voldoet aan de eisen van uw gemeente."
         />
 
