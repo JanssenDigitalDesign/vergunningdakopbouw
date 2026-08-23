@@ -22,8 +22,8 @@ export function Packages({ content }: { content: LandingPageContent }) {
         />
 
         <div
-          className={`mx-auto mt-12 grid max-w-4xl gap-6 ${
-            packages.length === 1 ? "max-w-md" : "sm:grid-cols-2"
+          className={`mx-auto mt-12 grid max-w-5xl gap-6 ${
+            packages.length === 1 ? "max-w-md" : packages.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3"
           }`}
         >
           {packages.map((pkg, index) => (
@@ -47,7 +47,14 @@ export function Packages({ content }: { content: LandingPageContent }) {
                   {pkg.description}
                 </p>
 
-                <ul className="mt-6 flex-1 space-y-3">
+                <p
+                  className={`mt-6 text-xs font-semibold uppercase tracking-wide ${
+                    pkg.highlighted ? "text-brand-gold" : "text-brand-gold-dark"
+                  }`}
+                >
+                  U ontvangt
+                </p>
+                <ul className="mt-3 flex-1 space-y-3">
                   {pkg.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2.5 text-sm">
                       <CheckCircleIcon

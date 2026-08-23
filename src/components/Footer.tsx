@@ -38,21 +38,47 @@ export function Footer({ content }: { content: LandingPageContent }) {
             >
               {content.phone}
             </a>
-            <a
-              href={whatsAppLink(content.phone)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center gap-1.5 text-sm text-slate-300 hover:text-brand-gold"
-            >
-              <WhatsAppIcon className="h-4 w-4" />
-              WhatsApp
-            </a>
-            <a href="#offerte" className={`mt-4 ${primaryButtonClassOnDark("sm")}`}>
-              Offerte aanvragen
-            </a>
+
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a
+                href="#offerte"
+                className={primaryButtonClassOnDark("sm")}
+              >
+                Offerte aanvragen
+              </a>
+              <a
+                href={whatsAppLink(content.phone)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-white/20 px-4 py-2.5 text-sm font-semibold text-white transition duration-200 hover:-translate-y-0.5 hover:border-white hover:bg-white/10"
+              >
+                <WhatsAppIcon className="h-4 w-4" />
+                WhatsApp
+              </a>
+            </div>
           </div>
 
           <FooterColumn title="Meer" items={MORE_LINKS} />
+
+          <div className="rounded-xl border border-white/10 bg-white/5 p-5">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              Onderdeel van
+            </p>
+            <a
+              href="https://janssendigital.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-block text-sm font-semibold text-white hover:text-brand-gold"
+            >
+              Janssen Digital Design B.V.
+            </a>
+            <div className="mt-3 space-y-1.5 text-sm text-slate-400">
+              <p>Snellius 1, 6422 RM Heerlen</p>
+              <a href="mailto:info@janssendigital.com" className="block hover:text-brand-gold">
+                info@janssendigital.com
+              </a>
+            </div>
+          </div>
         </div>
 
         <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">

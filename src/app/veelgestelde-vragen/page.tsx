@@ -53,7 +53,7 @@ export default async function VeelgesteldeVragenPage() {
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-navy/10 text-brand-navy">
                   <ChatIcon className="h-5 w-5" />
                 </span>
-                Bel gerust: {content.phone}
+                Bel ons direct: {content.phone}
               </a>
               <span className="hidden h-8 w-px bg-brand-line sm:block" />
               <a

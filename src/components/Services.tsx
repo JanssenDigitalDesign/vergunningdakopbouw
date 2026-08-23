@@ -4,9 +4,30 @@ import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { GlowBlob } from "@/components/decor/GlowBlob";
 import { DEFAULT_SERVICE_IMAGE } from "@/lib/serviceImages";
-import { DormerIcon, RulerPencilIcon, ShieldCheckIcon, FileCheckIcon } from "@/components/icons";
+import { ClipboardCheckIcon, RulerPencilIcon, ShieldCheckIcon, FileCheckIcon } from "@/components/icons";
 
-const ICONS = [DormerIcon, RulerPencilIcon, ShieldCheckIcon, FileCheckIcon];
+const ICONS = [ClipboardCheckIcon, RulerPencilIcon, ShieldCheckIcon, FileCheckIcon];
+
+// Every site's four services follow the same recurring pattern (the main
+// drawing service, a vergunningvrij-toets, constructieve onderbouwing,
+// begeleiding/aanvraag) — matching on that pattern here means each card
+// gets a genuinely different, topically-correct photo without needing a
+// bespoke image per service per site. Falls back to the site's own hero
+// photo (DEFAULT_SERVICE_IMAGE) for the main service and anything that
+// doesn't match a known pattern, so a card is never left without an image.
+function imageFor(title: string): { src: string; alt: string } {
+  const t = title.toLowerCase();
+  if (t.includes("toets") || t.includes("check")) {
+    return { src: "/images/service-toets.jpg", alt: "Inspecteur controleert een checklist op locatie" };
+  }
+  if (t.includes("constructie") || t.includes("onderbouwing")) {
+    return { src: "/images/service-constructie.jpg", alt: "Detail van een constructieve staalverbinding" };
+  }
+  if (t.includes("begeleiding") || t.includes("aanvraag") || t.includes("indienen")) {
+    return { src: "/images/aanvraag-proces-hero.jpg", alt: "Aanvraagformulier wordt ingevuld" };
+  }
+  return DEFAULT_SERVICE_IMAGE;
+}
 
 export function Services({ content }: { content: LandingPageContent }) {
   return (
@@ -18,11 +39,17 @@ export function Services({ content }: { content: LandingPageContent }) {
           title="Waar wij u bij helpen"
           description="Van eerste schets tot een tekening die voldoet aan de eisen van uw gemeente."
         />
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
+        {/* Horizontal scroll-snap row instead of a 3-and-1 grid: shows as
+            many cards as fit the viewport at once, and scrolls (trackpad,
+            touch, or arrow keys once focused) for the rest — no JS needed. */}
+        <div className="-mx-4 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 sm:mx-0 sm:px-0 [scrollbar-width:thin]">
           {content.services.map((service, index) => (
-            <Reveal key={service.title} delay={index * 75}>
-              <ServiceCard service={service} index={index} />
-            </Reveal>
+            <div key={service.title} className="w-[85%] shrink-0 snap-start sm:w-[46%] lg:w-[31%]">
+              <Reveal delay={index * 75}>
+                <ServiceCard service={service} index={index} />
+              </Reveal>
+            </div>
           ))}
         </div>
       </div>
@@ -32,7 +59,7 @@ export function Services({ content }: { content: LandingPageContent }) {
 
 function ServiceCard({ service, index }: { service: ServiceItem; index: number }) {
   const Icon = ICONS[index % ICONS.length];
-  const image = DEFAULT_SERVICE_IMAGE;
+  const image = imageFor(service.title);
 
   return (
     <a

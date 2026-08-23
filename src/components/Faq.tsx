@@ -17,20 +17,18 @@ export function Faq({ content }: { content: LandingPageContent }) {
               description="Staat uw vraag er niet bij? We beantwoorden hem graag persoonlijk."
             />
             <Reveal delay={100}>
-              <div className="mt-6 flex items-center gap-3 rounded-xl border border-brand-line bg-brand-beige p-4">
+              <a
+                href={`tel:${content.phone.replace(/\s+/g, "")}`}
+                className="flex items-center gap-3 rounded-xl border border-brand-line bg-brand-beige p-4 transition hover:border-brand-gold/50"
+              >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-navy/10 text-brand-navy">
                   <ChatIcon className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-brand-navy">Bel gerust</p>
-                  <a
-                    href={`tel:${content.phone.replace(/\s+/g, "")}`}
-                    className="text-sm text-brand-navy hover:underline"
-                  >
-                    {content.phone}
-                  </a>
+                  <p className="text-sm font-semibold text-brand-navy">Bel ons direct</p>
+                  <span className="text-sm text-brand-gold-dark">Persoonlijk contact met een specialist</span>
                 </div>
-              </div>
+              </a>
             </Reveal>
             <Reveal delay={120}>
               <a

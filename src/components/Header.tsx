@@ -49,7 +49,7 @@ export function Header({ content }: { content: LandingPageContent }) {
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-brand-navy/20 px-4 py-2.5 text-sm font-semibold text-brand-navy transition hover:border-brand-navy hover:bg-brand-beige"
             >
               <CalendarIcon className="h-4 w-4" />
-              Plan gesprek
+              Gratis gesprek
             </a>
             <a href="#offerte" className={primaryButtonClass("sm")}>
               Offerte aanvragen

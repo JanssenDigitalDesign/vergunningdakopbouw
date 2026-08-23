@@ -18,7 +18,7 @@ export function Statement() {
         fill
         aria-hidden="true"
         sizes="100vw"
-        className="object-cover opacity-25"
+        className="object-cover opacity-15 grayscale"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-brand-navy-dark via-brand-navy-dark/90 to-brand-navy-dark" />
 
