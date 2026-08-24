@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/Reveal";
+import { CountUp } from "@/components/CountUp";
 import type { LandingPageContent } from "@/types/content";
 
 // Bold, numeric-style social proof — the thing this site was missing
@@ -21,9 +22,10 @@ export function StatsBand({ content }: { content: LandingPageContent }) {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           {stats.map((stat, index) => (
             <Reveal key={stat.label} delay={index * 75} className="text-center">
-              <p className="font-heading text-4xl font-extrabold uppercase tracking-tight text-brand-navy sm:text-5xl">
-                {stat.value}
-              </p>
+              <CountUp
+                value={stat.value}
+                className="font-heading text-4xl font-extrabold uppercase tracking-tight text-brand-navy sm:text-5xl"
+              />
               <p className="mt-1.5 text-sm text-brand-ink-muted">{stat.label}</p>
             </Reveal>
           ))}

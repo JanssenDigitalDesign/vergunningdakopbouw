@@ -15,7 +15,14 @@ const ICONS = [ClipboardCheckIcon, RulerPencilIcon, ShieldCheckIcon, FileCheckIc
 // bespoke image per service per site. Falls back to the site's own hero
 // photo (DEFAULT_SERVICE_IMAGE) for the main service and anything that
 // doesn't match a known pattern, so a card is never left without an image.
-function imageFor(title: string): { src: string; alt: string } {
+const FALLBACK_IMAGES: { src: string; alt: string }[] = [
+  DEFAULT_SERVICE_IMAGE,
+  { src: "/images/hero-drafting-desk.jpg", alt: "Tekenaar werkt aan een technische bouwtekening" },
+  { src: "/images/hero-villa.jpg", alt: "Vrijstaande woning waarvoor een vergunningtekening is gemaakt" },
+  { src: "/images/hero-vergunningtekening.jpg", alt: "Uitgewerkte vergunningtekening met maatvoering" },
+];
+
+function matchImage(title: string): { src: string; alt: string } | null {
   const t = title.toLowerCase();
   if (t.includes("toets") || t.includes("check")) {
     return { src: "/images/service-toets.jpg", alt: "Inspecteur controleert een checklist op locatie" };
@@ -26,10 +33,39 @@ function imageFor(title: string): { src: string; alt: string } {
   if (t.includes("begeleiding") || t.includes("aanvraag") || t.includes("indienen")) {
     return { src: "/images/aanvraag-proces-hero.jpg", alt: "Aanvraagformulier wordt ingevuld" };
   }
-  return DEFAULT_SERVICE_IMAGE;
+  return null;
+}
+
+// Matches each card to a topically-correct photo first, then fills any card
+// left without one (no keyword match, or its match already taken by an
+// earlier card) from a small pool of generic photos, so no two cards on the
+// same page ever repeat an image regardless of the service titles.
+function imagesFor(services: ServiceItem[]): { src: string; alt: string }[] {
+  const used = new Set<string>();
+  const matched = services.map((service) => {
+    const image = matchImage(service.title);
+    if (image && !used.has(image.src)) {
+      used.add(image.src);
+      return image;
+    }
+    return null;
+  });
+
+  let poolIndex = 0;
+  return matched.map((image) => {
+    if (image) return image;
+    while (poolIndex < FALLBACK_IMAGES.length && used.has(FALLBACK_IMAGES[poolIndex].src)) {
+      poolIndex++;
+    }
+    const fallback = FALLBACK_IMAGES[poolIndex] ?? DEFAULT_SERVICE_IMAGE;
+    used.add(fallback.src);
+    poolIndex++;
+    return fallback;
+  });
 }
 
 export function Services({ content }: { content: LandingPageContent }) {
+  const images = imagesFor(content.services);
   return (
     <section id="diensten" className="relative overflow-hidden border-b border-brand-line bg-white">
       <GlowBlob className="-bottom-32 -left-24 h-80 w-80 bg-brand-navy/10" />
@@ -47,7 +83,7 @@ export function Services({ content }: { content: LandingPageContent }) {
           {content.services.map((service, index) => (
             <div key={service.title} className="w-[85%] shrink-0 snap-start sm:w-[46%] lg:w-[31%]">
               <Reveal delay={index * 75}>
-                <ServiceCard service={service} index={index} />
+                <ServiceCard service={service} index={index} image={images[index]} />
               </Reveal>
             </div>
           ))}
@@ -57,9 +93,16 @@ export function Services({ content }: { content: LandingPageContent }) {
   );
 }
 
-function ServiceCard({ service, index }: { service: ServiceItem; index: number }) {
+function ServiceCard({
+  service,
+  index,
+  image,
+}: {
+  service: ServiceItem;
+  index: number;
+  image: { src: string; alt: string };
+}) {
   const Icon = ICONS[index % ICONS.length];
-  const image = imageFor(service.title);
 
   return (
     <a

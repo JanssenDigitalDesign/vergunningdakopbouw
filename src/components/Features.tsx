@@ -8,9 +8,10 @@ import {
   MapPinIcon,
   ChatIcon,
   NoStringsIcon,
+  CheckCircleIcon,
 } from "@/components/icons";
 
-const ICONS = [ClockIcon, ShieldCheckIcon, MapPinIcon, ChatIcon, NoStringsIcon];
+const ICONS = [ClockIcon, ShieldCheckIcon, MapPinIcon, ChatIcon, NoStringsIcon, CheckCircleIcon];
 
 // The USP section — deliberately the most trust-forward block on the page:
 // every claim here is a concrete reason to pick us over an anonymous
